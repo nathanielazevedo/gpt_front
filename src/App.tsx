@@ -11,7 +11,7 @@ function App() {
 
   const translate = async (prompt: string) => {
     setFetching(true);
-    await fetch("http://localhost:5000/", {
+    await fetch("https://gpt-back-qpme.onrender.com/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,6 +19,7 @@ function App() {
       body: JSON.stringify({ prompt: prompt }),
     })
       .then(async (res) => {
+        if (!res.ok) throw new Error("Something went wrong.");
         const newText = await res.json();
         setDisplayText(
           newText?.message?.choices[0]?.text ?? "Something went wrong."
